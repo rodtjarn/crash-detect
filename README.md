@@ -189,3 +189,4 @@ Educational purposes only. Not financial advice. Trading involves risk.
 ## Support
 
 See `CLAUDE.md` for detailed technical documentation and architecture.
+# crash-detect
