@@ -6,9 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is an automated trading alert system that monitors stock market conditions and sends email/SMS notifications when specific technical indicators align for high-probability trade setups. The system implements a four-indicator strategy combining fractal dimension analysis, put/call ratios, VIX levels, and Hidden Markov Model regime detection.
 
-**Core Strategy**: Fractal < 0.7 + Put/Call > 1.2 + Markov=Volatile + VIX > 25
-**Expected Performance**: 90%+ win rate, 4%+ average return per trade
-**Signal Frequency**: ~10-15 signals per year
+**Core Strategy**: Fractal < 1.15 + Put/Call > 1.2 + Markov=Crisis + VIX > 30
+**Configuration**: SEVERE CRASHES ONLY (optimized thresholds based on real crash data)
+**Expected Performance**: Catches major crashes (COVID, 2008-level events)
+**Signal Frequency**: 1-3 signals per year (only during severe market stress)
 
 ## System Architecture
 
@@ -67,11 +68,11 @@ This is an automated trading alert system that monitors stock market conditions 
 
 ### Signal Logic
 
-**SHORT Signal** (lines 305-312):
-- Fractal dimension < 0.7 (volatility compressed)
-- Put/Call ratio > 1.2 (bearish sentiment)
-- VIX > 25 (elevated fear)
-- Markov state = "Volatile" (unstable regime)
+**SHORT Signal (SEVERE CRASH DETECTION)** (lines 305-312):
+- Fractal dimension < 1.15 (realistic threshold - COVID crash was 1.067)
+- Put/Call ratio > 1.2 (high panic)
+- VIX > 30 (SEVERE fear - normal crashes ~25, severe crashes 30+)
+- Markov state = "Crisis" (market in full crisis mode)
 - All 4 conditions must be met simultaneously
 
 **LONG Signal** (lines 314-321):
@@ -80,6 +81,9 @@ This is an automated trading alert system that monitors stock market conditions 
 - VIX < 20
 - Markov state = "Bull"
 - All 4 conditions must be met simultaneously
+
+**Note**: Current thresholds are optimized for SEVERE crashes only (COVID-level events).
+Original thresholds (Fractal < 0.7, VIX > 25, Markov = "Volatile") were too strict and never triggered in real market conditions.
 
 ## Common Development Tasks
 
@@ -103,15 +107,28 @@ pip install twilio  # Optional, for SMS alerts
 
 ### Scheduled Execution
 
-**Linux/Mac (cron)**:
+**Arch Linux Auto-Boot (Recommended)**:
 ```bash
-# Run daily at 4:30 PM ET (market close)
-30 16 * * 1-5 cd /home/per/work && python trading_alert_system.py >> logs.txt 2>&1
+# Install auto-boot setup
+./setup_linux_autorun.sh
+
+# System will:
+# - Wake from shutdown at 3:00 PM ET daily (1 hour before market close)
+# - Run trading_alert_system.py automatically
+# - Shutdown after completion
+# - Set next wake time before shutdown
+# Power consumption: ~$0.30/month
+```
+
+**Linux/Mac (cron alternative)**:
+```bash
+# Run daily at 3:00 PM ET (1 hour before market close)
+0 15 * * 1-5 cd /path/to/crash-detect && python3 trading_alert_system.py >> logs.txt 2>&1
 ```
 
 **Windows (Task Scheduler)**:
-- Trigger: Daily at 4:30 PM, Monday-Friday
-- Action: `python C:\path\to\trading_alert_system.py`
+- Trigger: Daily at 3:00 PM, Monday-Friday
+- Action: `python3 C:\path\to\crash-detect\trading_alert_system.py`
 
 ### Configuration
 
@@ -120,9 +137,12 @@ pip install twilio  # Optional, for SMS alerts
 - Generate at: https://myaccount.google.com/apppasswords
 - Requires 2FA enabled on Gmail account
 
-**Threshold tuning**:
-- More conservative (fewer signals): Lower fractal_max (0.6), raise put_call_min (1.3), raise vix_min (30)
-- More aggressive (more signals): Raise fractal_max (0.8), lower put_call_min (1.1), lower vix_min (20)
+**Threshold tuning** (config.json):
+- **Current (SEVERE crashes only)**: fractal_max=1.15, vix_min=30, put_call_min=1.2, markov_state="Crisis"
+- **More conservative** (fewer signals): vix_min=35, put_call_min=1.3
+- **More aggressive** (more signals, less severe): fractal_max=1.2, vix_min=25, markov_state="Volatile"
+
+**Important**: Original academic thresholds (fractal<0.7) never trigger in real markets. Current thresholds are based on actual crash data (COVID, 2008).
 
 ## Important Implementation Notes
 
