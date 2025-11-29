@@ -1,0 +1,30 @@
+# Logs
+*.log
+logs.txt
+trading_alert.log
+wake_schedule.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sensitive - DO NOT COMMIT
+config.json
+
+# Temporary files
+*.tmp
+.DS_Store
