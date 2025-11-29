@@ -1,0 +1,605 @@
+======================================================================
+PORTFOLIO BACKTEST RESULTS - 20 YEARS
+Generated: 2025-11-29 14:58:53
+======================================================================
+
+CONFIGURATION:
+  Initial Capital: $100,000.00
+  Position Size: 3%
+  Gain Target: 20%
+  Stop Loss: 5%
+  Max Hold: 8 days
+
+SUMMARY:
+  Final Portfolio: $128,192.00
+  Total Return: +28.19%
+  Total Trades: 58
+  Win Rate: 77.6%
+  Average Return per Trade: 0.55%
+  Best Trade: 10.19%
+  Worst Trade: -12.10%
+
+======================================================================
+DETAILED TRADE LOG
+======================================================================
+
+Trade #1:
+  Entry Date: 2008-09-17
+  Exit Date: 2008-09-18
+  Days Held: 1
+  Exit Reason: STOP LOSS (-13.0%)
+  SPY: $1156.39 -> $1206.51 (+4.33%)
+  SPXS: $100.00 -> $87.00 (-13.00%)
+  Portfolio: $100,000.00 -> $103,814.08 (+3.81%)
+  Indicators: Fractal=1.167, VIX=36.2, P/C=1.16
+
+Trade #2:
+  Entry Date: 2008-09-30
+  Exit Date: 2008-10-06
+  Days Held: 4
+  Exit Reason: GAIN TARGET (28.2%)
+  SPY: $1166.36 -> $1056.89 (-9.39%)
+  SPXS: $100.00 -> $128.16 (+28.16%)
+  Portfolio: $103,814.08 -> $95,239.72 (-8.26%)
+  Indicators: Fractal=1.159, VIX=39.4, P/C=1.12
+
+Trade #3:
+  Entry Date: 2008-10-10
+  Exit Date: 2008-10-13
+  Days Held: 1
+  Exit Reason: STOP LOSS (-34.7%)
+  SPY: $899.22 -> $1003.35 (+11.58%)
+  SPXS: $100.00 -> $65.26 (-34.74%)
+  Portfolio: $95,239.72 -> $104,945.06 (+10.19%)
+  Indicators: Fractal=1.199, VIX=69.9, P/C=1.94
+
+Trade #4:
+  Entry Date: 2008-10-20
+  Exit Date: 2008-10-22
+  Days Held: 2
+  Exit Reason: GAIN TARGET (27.0%)
+  SPY: $985.40 -> $896.78 (-8.99%)
+  SPXS: $100.00 -> $126.98 (+26.98%)
+  Portfolio: $104,945.06 -> $96,639.60 (-7.91%)
+  Indicators: Fractal=1.120, VIX=53.0, P/C=1.32
+
+Trade #5:
+  Entry Date: 2008-10-23
+  Exit Date: 2008-10-28
+  Days Held: 3
+  Exit Reason: STOP LOSS (-10.7%)
+  SPY: $908.11 -> $940.51 (+3.57%)
+  SPXS: $100.00 -> $89.30 (-10.70%)
+  Portfolio: $96,639.60 -> $99,673.80 (+3.14%)
+  Indicators: Fractal=1.118, VIX=67.8, P/C=1.59
+
+Trade #6:
+  Entry Date: 2008-10-30
+  Exit Date: 2008-11-04
+  Days Held: 3
+  Exit Reason: STOP LOSS (-16.2%)
+  SPY: $954.09 -> $1005.75 (+5.41%)
+  SPXS: $100.00 -> $83.76 (-16.24%)
+  Portfolio: $99,673.80 -> $104,423.09 (+4.76%)
+  Indicators: Fractal=1.135, VIX=62.9, P/C=1.33
+
+Trade #7:
+  Entry Date: 2008-11-05
+  Exit Date: 2008-11-12
+  Days Held: 5
+  Exit Reason: GAIN TARGET (31.6%)
+  SPY: $952.77 -> $852.30 (-10.55%)
+  SPXS: $100.00 -> $131.64 (+31.64%)
+  Portfolio: $104,423.09 -> $94,733.01 (-9.28%)
+  Indicators: Fractal=1.192, VIX=54.6, P/C=1.26
+
+Trade #8:
+  Entry Date: 2008-11-13
+  Exit Date: 2008-11-19
+  Days Held: 4
+  Exit Reason: GAIN TARGET (34.5%)
+  SPY: $911.29 -> $806.58 (-11.49%)
+  SPXS: $100.00 -> $134.47 (+34.47%)
+  Portfolio: $94,733.01 -> $85,154.11 (-10.11%)
+  Indicators: Fractal=1.126, VIX=59.8, P/C=1.37
+
+Trade #9:
+  Entry Date: 2008-11-21
+  Exit Date: 2008-11-24
+  Days Held: 1
+  Exit Reason: STOP LOSS (-17.2%)
+  SPY: $800.03 -> $851.81 (+6.47%)
+  SPXS: $1109729.62 -> $918464.44 (-17.24%)
+  Portfolio: $85,154.11 -> $90,059.86 (+5.76%)
+  Indicators: Fractal=1.112, VIX=72.7, P/C=1.75
+
+Trade #10:
+  Entry Date: 2008-11-25
+  Exit Date: 2008-11-26
+  Days Held: 1
+  Exit Reason: STOP LOSS (-11.2%)
+  SPY: $857.39 -> $887.68 (+3.53%)
+  SPXS: $868559.62 -> $771245.31 (-11.20%)
+  Portfolio: $90,059.86 -> $92,843.35 (+3.09%)
+  Indicators: Fractal=1.102, VIX=60.9, P/C=1.40
+
+Trade #11:
+  Entry Date: 2008-12-02
+  Exit Date: 2008-12-03
+  Days Held: 1
+  Exit Reason: STOP LOSS (-7.5%)
+  SPY: $848.81 -> $870.74 (+2.58%)
+  SPXS: $834277.25 -> $771570.81 (-7.52%)
+  Portfolio: $92,843.35 -> $94,960.75 (+2.28%)
+  Indicators: Fractal=1.166, VIX=63.0, P/C=1.44
+
+Trade #12:
+  Entry Date: 2008-12-05
+  Exit Date: 2008-12-08
+  Days Held: 1
+  Exit Reason: STOP LOSS (-9.4%)
+  SPY: $876.07 -> $909.70 (+3.84%)
+  SPXS: $739024.25 -> $669917.06 (-9.35%)
+  Portfolio: $94,960.75 -> $98,230.29 (+3.44%)
+  Indicators: Fractal=1.154, VIX=59.9, P/C=1.43
+
+Trade #13:
+  Entry Date: 2008-12-11
+  Exit Date: 2008-12-16
+  Days Held: 3
+  Exit Reason: STOP LOSS (-14.0%)
+  SPY: $873.59 -> $913.18 (+4.53%)
+  SPXS: $731647.19 -> $629559.31 (-13.95%)
+  Portfolio: $98,230.29 -> $102,137.22 (+3.98%)
+  Indicators: Fractal=1.135, VIX=55.8, P/C=1.27
+
+Trade #14:
+  Entry Date: 2008-12-18
+  Exit Date: 2008-12-31
+  Days Held: 8
+  Exit Reason: STOP LOSS (-6.8%)
+  SPY: $885.28 -> $903.25 (+2.03%)
+  SPXS: $679898.00 -> $633573.38 (-6.81%)
+  Portfolio: $102,137.22 -> $103,939.49 (+1.76%)
+  Indicators: Fractal=1.126, VIX=47.3, P/C=1.18
+
+Trade #15:
+  Entry Date: 2009-01-09
+  Exit Date: 2009-01-20
+  Days Held: 6
+  Exit Reason: GAIN TARGET (32.2%)
+  SPY: $890.35 -> $805.22 (-9.56%)
+  SPXS: $639323.19 -> $844909.12 (+32.16%)
+  Portfolio: $103,939.49 -> $95,302.26 (-8.31%)
+  Indicators: Fractal=1.183, VIX=42.8, P/C=1.23
+
+Trade #16:
+  Entry Date: 2009-01-22
+  Exit Date: 2009-01-27
+  Days Held: 3
+  Exit Reason: STOP LOSS (-6.5%)
+  SPY: $827.50 -> $845.71 (+2.20%)
+  SPXS: $770268.94 -> $719821.62 (-6.55%)
+  Portfolio: $95,302.26 -> $97,149.33 (+1.94%)
+  Indicators: Fractal=1.131, VIX=47.3, P/C=1.24
+
+Trade #17:
+  Entry Date: 2009-02-02
+  Exit Date: 2009-02-05
+  Days Held: 3
+  Exit Reason: STOP LOSS (-7.2%)
+  SPY: $825.44 -> $845.85 (+2.47%)
+  SPXS: $759745.50 -> $705067.25 (-7.20%)
+  Portfolio: $97,149.33 -> $99,269.64 (+2.18%)
+  Indicators: Fractal=1.128, VIX=45.5, P/C=1.21
+
+Trade #18:
+  Entry Date: 2009-02-10
+  Exit Date: 2009-02-20
+  Days Held: 7
+  Exit Reason: GAIN TARGET (22.9%)
+  SPY: $827.16 -> $770.05 (-6.90%)
+  SPXS: $727524.50 -> $893946.00 (+22.88%)
+  Portfolio: $99,269.64 -> $93,302.58 (-6.01%)
+  Indicators: Fractal=1.182, VIX=46.7, P/C=1.22
+
+Trade #19:
+  Entry Date: 2009-02-24
+  Exit Date: 2009-03-02
+  Days Held: 4
+  Exit Reason: GAIN TARGET (29.8%)
+  SPY: $773.14 -> $700.82 (-9.35%)
+  SPXS: $868885.12 -> $1127739.00 (+29.79%)
+  Portfolio: $93,302.58 -> $85,670.71 (-8.18%)
+  Indicators: Fractal=1.167, VIX=45.5, P/C=1.22
+
+Trade #20:
+  Entry Date: 2009-03-03
+  Exit Date: 2009-03-04
+  Days Held: 1
+  Exit Reason: STOP LOSS (-7.5%)
+  SPY: $696.33 -> $712.87 (+2.38%)
+  SPXS: $1155186.62 -> $1068829.62 (-7.48%)
+  Portfolio: $85,670.71 -> $87,452.47 (+2.08%)
+  Indicators: Fractal=1.153, VIX=50.9, P/C=1.47
+
+Trade #21:
+  Entry Date: 2009-03-05
+  Exit Date: 2009-03-10
+  Days Held: 3
+  Exit Reason: STOP LOSS (-15.7%)
+  SPY: $682.55 -> $719.60 (+5.43%)
+  SPXS: $1196195.12 -> $1008944.06 (-15.65%)
+  Portfolio: $87,452.47 -> $91,646.44 (+4.80%)
+  Indicators: Fractal=1.134, VIX=50.2, P/C=1.44
+
+Trade #22:
+  Entry Date: 2009-03-11
+  Exit Date: 2009-03-12
+  Days Held: 1
+  Exit Reason: STOP LOSS (-12.1%)
+  SPY: $721.36 -> $750.74 (+4.07%)
+  SPXS: $996684.94 -> $875611.50 (-12.15%)
+  Portfolio: $91,646.44 -> $94,933.11 (+3.59%)
+  Indicators: Fractal=1.139, VIX=43.6, P/C=1.12
+
+Trade #23:
+  Entry Date: 2009-03-20
+  Exit Date: 2009-03-23
+  Days Held: 1
+  Exit Reason: STOP LOSS (-20.9%)
+  SPY: $768.54 -> $822.92 (+7.08%)
+  SPXS: $800971.31 -> $633573.38 (-20.90%)
+  Portfolio: $94,933.11 -> $100,853.61 (+6.24%)
+  Indicators: Fractal=1.117, VIX=45.9, P/C=1.15
+
+Trade #24:
+  Entry Date: 2009-03-30
+  Exit Date: 2009-04-01
+  Days Held: 2
+  Exit Reason: STOP LOSS (-8.3%)
+  SPY: $787.53 -> $811.08 (+2.99%)
+  SPXS: $702029.75 -> $643988.31 (-8.27%)
+  Portfolio: $100,853.61 -> $103,528.88 (+2.65%)
+  Indicators: Fractal=1.066, VIX=45.5, P/C=1.27
+
+Trade #25:
+  Entry Date: 2009-04-02
+  Exit Date: 2009-04-09
+  Days Held: 5
+  Exit Reason: STOP LOSS (-10.2%)
+  SPY: $834.38 -> $856.56 (+2.66%)
+  SPXS: $588984.69 -> $529098.88 (-10.17%)
+  Portfolio: $103,528.88 -> $105,882.59 (+2.27%)
+  Indicators: Fractal=1.070, VIX=42.0, P/C=1.12
+
+Trade #26:
+  Entry Date: 2009-04-20
+  Exit Date: 2009-04-21
+  Days Held: 1
+  Exit Reason: STOP LOSS (-5.6%)
+  SPY: $832.39 -> $850.08 (+2.13%)
+  SPXS: $564791.56 -> $532896.00 (-5.65%)
+  Portfolio: $105,882.59 -> $107,885.92 (+1.89%)
+  Indicators: Fractal=1.141, VIX=39.2, P/C=1.15
+
+Trade #27:
+  Entry Date: 2010-05-19
+  Exit Date: 2010-06-01
+  Days Held: 8
+  Exit Reason: TIME EXIT (8d)
+  SPY: $1115.05 -> $1070.71 (-3.98%)
+  SPXS: $165987.55 -> $181718.41 (+9.48%)
+  Portfolio: $107,885.92 -> $104,031.26 (-3.57%)
+  Indicators: Fractal=1.075, VIX=35.3, P/C=1.13
+
+Trade #28:
+  Entry Date: 2010-06-04
+  Exit Date: 2010-06-10
+  Days Held: 4
+  Exit Reason: STOP LOSS (-6.9%)
+  SPY: $1064.88 -> $1086.84 (+2.06%)
+  SPXS: $183237.20 -> $170544.06 (-6.93%)
+  Portfolio: $104,031.26 -> $105,896.04 (+1.79%)
+  Indicators: Fractal=1.109, VIX=35.5, P/C=1.10
+
+Trade #29:
+  Entry Date: 2010-06-29
+  Exit Date: 2010-07-07
+  Days Held: 5
+  Exit Reason: STOP LOSS (-5.7%)
+  SPY: $1041.24 -> $1060.27 (+1.83%)
+  SPXS: $191807.84 -> $180850.52 (-5.71%)
+  Portfolio: $105,896.04 -> $107,591.89 (+1.60%)
+  Indicators: Fractal=1.138, VIX=34.1, P/C=1.11
+
+Trade #30:
+  Entry Date: 2011-08-05
+  Exit Date: 2011-08-08
+  Days Held: 1
+  Exit Reason: GAIN TARGET (20.2%)
+  SPY: $1199.38 -> $1119.46 (-6.66%)
+  SPXS: $98334.06 -> $118209.14 (+20.21%)
+  Portfolio: $107,591.89 -> $101,290.03 (-5.86%)
+  Indicators: Fractal=1.141, VIX=32.0, P/C=1.13
+
+Trade #31:
+  Entry Date: 2011-08-09
+  Exit Date: 2011-08-15
+  Days Held: 4
+  Exit Reason: STOP LOSS (-10.8%)
+  SPY: $1172.53 -> $1204.49 (+2.73%)
+  SPXS: $100395.33 -> $89546.49 (-10.81%)
+  Portfolio: $101,290.03 -> $103,639.72 (+2.32%)
+  Indicators: Fractal=1.118, VIX=35.1, P/C=1.15
+
+Trade #32:
+  Entry Date: 2011-08-18
+  Exit Date: 2011-08-23
+  Days Held: 3
+  Exit Reason: STOP LOSS (-5.5%)
+  SPY: $1140.65 -> $1162.35 (+1.90%)
+  SPXS: $104214.15 -> $98442.55 (-5.54%)
+  Portfolio: $103,639.72 -> $105,380.04 (+1.68%)
+  Indicators: Fractal=1.044, VIX=42.7, P/C=1.19
+
+Trade #33:
+  Entry Date: 2011-09-09
+  Exit Date: 2011-09-14
+  Days Held: 3
+  Exit Reason: STOP LOSS (-8.8%)
+  SPY: $1154.23 -> $1188.68 (+2.98%)
+  SPXS: $96533.15 -> $88071.05 (-8.77%)
+  Portfolio: $105,380.04 -> $108,153.81 (+2.63%)
+  Indicators: Fractal=1.108, VIX=38.5, P/C=1.16
+
+Trade #34:
+  Entry Date: 2011-09-22
+  Exit Date: 2011-09-26
+  Days Held: 2
+  Exit Reason: STOP LOSS (-8.6%)
+  SPY: $1129.56 -> $1162.95 (+2.96%)
+  SPXS: $101957.58 -> $93235.09 (-8.56%)
+  Portfolio: $108,153.81 -> $110,977.36 (+2.61%)
+  Indicators: Fractal=1.126, VIX=41.3, P/C=1.25
+
+Trade #35:
+  Entry Date: 2011-09-27
+  Exit Date: 2011-10-03
+  Days Held: 4
+  Exit Reason: GAIN TARGET (22.1%)
+  SPY: $1175.38 -> $1099.23 (-6.48%)
+  SPXS: $90067.22 -> $109942.34 (+22.07%)
+  Portfolio: $110,977.36 -> $104,737.79 (-5.62%)
+  Indicators: Fractal=1.152, VIX=37.7, P/C=1.11
+
+Trade #36:
+  Entry Date: 2011-10-04
+  Exit Date: 2011-10-05
+  Days Held: 1
+  Exit Reason: STOP LOSS (-6.0%)
+  SPY: $1123.95 -> $1144.03 (+1.79%)
+  SPXS: $102369.85 -> $96272.77 (-5.96%)
+  Portfolio: $104,737.79 -> $106,365.71 (+1.55%)
+  Indicators: Fractal=1.180, VIX=40.8, P/C=1.20
+
+Trade #37:
+  Entry Date: 2011-11-23
+  Exit Date: 2011-11-28
+  Days Held: 2
+  Exit Reason: STOP LOSS (-8.3%)
+  SPY: $1161.79 -> $1192.55 (+2.65%)
+  SPXS: $84404.12 -> $77417.47 (-8.28%)
+  Portfolio: $106,365.71 -> $108,833.27 (+2.32%)
+  Indicators: Fractal=1.192, VIX=34.0, P/C=1.13
+
+Trade #38:
+  Entry Date: 2015-08-24
+  Exit Date: 2015-08-26
+  Days Held: 2
+  Exit Reason: STOP LOSS (-8.8%)
+  SPY: $1893.21 -> $1940.51 (+2.50%)
+  SPXS: $10254.34 -> $9351.72 (-8.80%)
+  Portfolio: $108,833.27 -> $111,183.40 (+2.16%)
+  Indicators: Fractal=1.124, VIX=40.7, P/C=1.32
+
+Trade #39:
+  Entry Date: 2018-02-08
+  Exit Date: 2018-02-12
+  Days Held: 2
+  Exit Reason: STOP LOSS (-8.5%)
+  SPY: $2581.00 -> $2656.00 (+2.91%)
+  SPXS: $2829.38 -> $2588.10 (-8.53%)
+  Portfolio: $111,183.40 -> $114,032.86 (+2.56%)
+  Indicators: Fractal=1.045, VIX=33.5, P/C=1.18
+
+Trade #40:
+  Entry Date: 2020-02-27
+  Exit Date: 2020-03-02
+  Days Held: 2
+  Exit Reason: STOP LOSS (-11.9%)
+  SPY: $2978.76 -> $3090.23 (+3.74%)
+  SPXS: $1448.87 -> $1276.28 (-11.91%)
+  Portfolio: $114,032.86 -> $117,764.62 (+3.27%)
+  Indicators: Fractal=1.030, VIX=39.2, P/C=1.33
+
+Trade #41:
+  Entry Date: 2020-03-03
+  Exit Date: 2020-03-04
+  Days Held: 1
+  Exit Reason: STOP LOSS (-12.7%)
+  SPY: $3003.37 -> $3130.12 (+4.22%)
+  SPXS: $1386.03 -> $1209.90 (-12.71%)
+  Portfolio: $117,764.62 -> $122,136.54 (+3.71%)
+  Indicators: Fractal=1.032, VIX=36.8, P/C=1.13
+
+Trade #42:
+  Entry Date: 2020-03-10
+  Exit Date: 2020-03-12
+  Days Held: 2
+  Exit Reason: GAIN TARGET (47.2%)
+  SPY: $2882.23 -> $2480.64 (-13.93%)
+  SPXS: $1465.69 -> $2157.81 (+47.22%)
+  Portfolio: $122,136.54 -> $107,359.68 (-12.10%)
+  Indicators: Fractal=1.051, VIX=47.3, P/C=1.28
+
+Trade #43:
+  Entry Date: 2020-03-13
+  Exit Date: 2020-03-16
+  Days Held: 1
+  Exit Reason: GAIN TARGET (33.8%)
+  SPY: $2711.02 -> $2386.13 (-11.98%)
+  SPXS: $1570.12 -> $2101.17 (+33.82%)
+  Portfolio: $107,359.68 -> $95,968.95 (-10.61%)
+  Indicators: Fractal=1.071, VIX=57.8, P/C=1.52
+
+Trade #44:
+  Entry Date: 2020-03-18
+  Exit Date: 2020-03-23
+  Days Held: 3
+  Exit Reason: GAIN TARGET (23.9%)
+  SPY: $2398.10 -> $2237.40 (-6.70%)
+  SPXS: $1962.21 -> $2430.42 (+23.86%)
+  Portfolio: $95,968.95 -> $90,417.83 (-5.78%)
+  Indicators: Fractal=1.060, VIX=76.4, P/C=1.87
+
+Trade #45:
+  Entry Date: 2020-03-24
+  Exit Date: 2020-03-25
+  Days Held: 1
+  Exit Reason: STOP LOSS (-5.4%)
+  SPY: $2447.33 -> $2475.56 (+1.15%)
+  SPXS: $1773.21 -> $1677.56 (-5.39%)
+  Portfolio: $90,417.83 -> $91,283.19 (+0.96%)
+  Indicators: Fractal=1.029, VIX=61.7, P/C=1.48
+
+Trade #46:
+  Entry Date: 2020-03-26
+  Exit Date: 2020-04-06
+  Days Held: 7
+  Exit Reason: STOP LOSS (-10.1%)
+  SPY: $2630.07 -> $2663.68 (+1.28%)
+  SPXS: $1379.07 -> $1240.01 (-10.08%)
+  Portfolio: $91,283.19 -> $92,138.57 (+0.94%)
+  Indicators: Fractal=1.017, VIX=61.0, P/C=1.22
+
+Trade #47:
+  Entry Date: 2020-04-07
+  Exit Date: 2020-04-08
+  Days Held: 1
+  Exit Reason: STOP LOSS (-10.3%)
+  SPY: $2659.41 -> $2749.98 (+3.41%)
+  SPXS: $1235.58 -> $1108.92 (-10.25%)
+  Portfolio: $92,138.57 -> $94,898.99 (+3.00%)
+  Indicators: Fractal=1.071, VIX=46.7, P/C=1.14
+
+Trade #48:
+  Entry Date: 2020-04-20
+  Exit Date: 2020-04-27
+  Days Held: 5
+  Exit Reason: STOP LOSS (-6.7%)
+  SPY: $2823.16 -> $2878.48 (+1.96%)
+  SPXS: $1003.52 -> $936.21 (-6.71%)
+  Portfolio: $94,898.99 -> $96,511.79 (+1.70%)
+  Indicators: Fractal=1.043, VIX=43.8, P/C=1.11
+
+Trade #49:
+  Entry Date: 2020-06-11
+  Exit Date: 2020-06-15
+  Days Held: 2
+  Exit Reason: STOP LOSS (-6.4%)
+  SPY: $3002.10 -> $3066.59 (+2.15%)
+  SPXS: $770.58 -> $720.98 (-6.44%)
+  Portfolio: $96,511.79 -> $98,336.46 (+1.89%)
+  Indicators: Fractal=1.132, VIX=40.8, P/C=1.18
+
+Trade #50:
+  Entry Date: 2020-10-28
+  Exit Date: 2020-11-03
+  Days Held: 4
+  Exit Reason: STOP LOSS (-8.6%)
+  SPY: $3271.03 -> $3369.16 (+3.00%)
+  SPXS: $538.52 -> $492.46 (-8.55%)
+  Portfolio: $98,336.46 -> $100,945.71 (+2.65%)
+  Indicators: Fractal=1.074, VIX=40.3, P/C=1.20
+
+Trade #51:
+  Entry Date: 2021-01-27
+  Exit Date: 2021-02-02
+  Days Held: 4
+  Exit Reason: STOP LOSS (-6.0%)
+  SPY: $3750.77 -> $3826.31 (+2.01%)
+  SPXS: $341.89 -> $321.43 (-5.98%)
+  Portfolio: $100,945.71 -> $102,736.52 (+1.77%)
+  Indicators: Fractal=1.104, VIX=37.2, P/C=1.11
+
+Trade #52:
+  Entry Date: 2022-03-07
+  Exit Date: 2022-03-09
+  Days Held: 2
+  Exit Reason: STOP LOSS (-6.0%)
+  SPY: $4201.09 -> $4277.88 (+1.83%)
+  SPXS: $200.70 -> $188.66 (-6.00%)
+  Portfolio: $102,736.52 -> $104,373.08 (+1.59%)
+  Indicators: Fractal=1.071, VIX=36.5, P/C=1.13
+
+Trade #53:
+  Entry Date: 2022-04-26
+  Exit Date: 2022-04-28
+  Days Held: 2
+  Exit Reason: STOP LOSS (-8.4%)
+  SPY: $4175.20 -> $4287.50 (+2.69%)
+  SPXS: $196.01 -> $179.62 (-8.36%)
+  Portfolio: $104,373.08 -> $106,834.41 (+2.36%)
+  Indicators: Fractal=1.087, VIX=33.5, P/C=1.13
+
+Trade #54:
+  Entry Date: 2022-05-11
+  Exit Date: 2022-05-13
+  Days Held: 2
+  Exit Reason: STOP LOSS (-6.8%)
+  SPY: $3935.18 -> $4023.89 (+2.25%)
+  SPXS: $225.95 -> $210.54 (-6.82%)
+  Portfolio: $106,834.41 -> $108,951.90 (+1.98%)
+  Indicators: Fractal=1.122, VIX=32.6, P/C=1.16
+
+Trade #55:
+  Entry Date: 2022-06-13
+  Exit Date: 2022-06-24
+  Days Held: 8
+  Exit Reason: STOP LOSS (-13.8%)
+  SPY: $3749.63 -> $3911.74 (+4.32%)
+  SPXS: $248.27 -> $214.08 (-13.77%)
+  Portfolio: $108,951.90 -> $113,070.86 (+3.78%)
+  Indicators: Fractal=1.070, VIX=34.0, P/C=1.20
+
+Trade #56:
+  Entry Date: 2022-10-12
+  Exit Date: 2022-10-13
+  Days Held: 1
+  Exit Reason: STOP LOSS (-7.7%)
+  SPY: $3577.03 -> $3669.91 (+2.60%)
+  SPXS: $259.60 -> $239.50 (-7.74%)
+  Portfolio: $113,070.86 -> $115,656.03 (+2.29%)
+  Indicators: Fractal=1.052, VIX=33.6, P/C=1.11
+
+Trade #57:
+  Entry Date: 2024-08-05
+  Exit Date: 2024-08-08
+  Days Held: 3
+  Exit Reason: STOP LOSS (-7.5%)
+  SPY: $5186.33 -> $5319.31 (+2.56%)
+  SPXS: $87.08 -> $80.51 (-7.54%)
+  Portfolio: $115,656.03 -> $118,270.89 (+2.26%)
+  Indicators: Fractal=1.066, VIX=38.6, P/C=1.18
+
+Trade #58:
+  Entry Date: 2025-04-08
+  Exit Date: 2025-04-09
+  Days Held: 1
+  Exit Reason: STOP LOSS (-28.0%)
+  SPY: $4982.77 -> $5456.90 (+9.52%)
+  SPXS: $96.80 -> $69.65 (-28.05%)
+  Portfolio: $118,270.89 -> $128,192.00 (+8.39%)
+  Indicators: Fractal=1.095, VIX=52.3, P/C=1.52
+
