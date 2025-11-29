@@ -21,15 +21,19 @@
       "vix_symbol": "^VIX",
       "index_symbol": "^GSPC"
     },
-    "position_size": 2.0,
+    "position_size": 5.0,
+    "hold_days": 8,
+    "leverage": 3,
     "thresholds": {
-      "fractal_max": 1.15,
-      "put_call_min": 1.2,
-      "vix_min": 30,
+      "fractal_max": 1.2,
+      "put_call_min": 1.1,
+      "vix_min": 25,
+      "use_markov": false,
       "markov_state": "Crisis",
       "fractal_max_long": 0.8,
       "put_call_max_long": 0.5,
       "vix_max_long": 20,
+      "use_markov_long": false,
       "markov_state_long": "Bull"
     }
   },

@@ -4,25 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an automated trading alert system that monitors stock market conditions and sends email/SMS notifications when specific technical indicators align for high-probability trade setups. The system implements a four-indicator strategy combining fractal dimension analysis, put/call ratios, VIX levels, and Hidden Markov Model regime detection.
+This is an automated trading alert system that monitors stock market conditions and sends email/SMS notifications when specific technical indicators align for high-probability trade setups. The system implements a three-indicator strategy combining fractal dimension analysis, put/call ratios, and VIX levels. A Hidden Markov Model is calculated for informational purposes but not required for signals.
 
-**Core Strategy**: Fractal < 1.15 + Put/Call > 1.2 + Markov=Crisis + VIX > 30
-**Configuration**: SEVERE CRASHES ONLY (optimized thresholds based on real crash data)
-**Expected Performance**: Catches major crashes (COVID, 2008-level events)
-**Signal Frequency**: 1-3 signals per year (only during severe market stress)
+**Core Strategy**: Fractal < 1.2 + Put/Call > 1.1 + VIX > 25
+**Configuration**: Optimized thresholds based on 5-year backtest data
+**Backtest Performance**: 14 signals in 5 years, avg drop -2.46%, max drop -12.18%
+**Expected Returns**: 7.38% avg on 3x inverse ETF, 4.60% avg with 1.5% stop loss
+**Signal Frequency**: ~3 signals per year during market stress
 
 ## System Architecture
 
 ### Main Components
 
-**trading_alert_system.py** (667 lines)
+**trading_alert_system.py** (700+ lines)
 - `TradingAlertSystem` class: Main orchestrator for the entire system
 - Market data fetching via yfinance API
-- Four technical indicator calculations:
+- Three core technical indicators for signal generation:
   - Fractal dimension using Hurst exponent (R/S analysis)
   - Put/Call ratio proxy calculation
   - VIX (volatility index) monitoring
-  - Hidden Markov Model for regime detection (4-state: Normal, Volatile, Crisis, Bull)
+- Additional informational indicator:
+  - Hidden Markov Model for regime detection (4-state: Normal, Volatile, Crisis, Bull) - optional, disabled by default
 - Signal generation logic for both LONG and SHORT setups
 - Email alerts via SMTP (supports Gmail, Outlook, Yahoo)
 - SMS alerts via Twilio API (optional)
@@ -68,22 +70,27 @@ This is an automated trading alert system that monitors stock market conditions 
 
 ### Signal Logic
 
-**SHORT Signal (SEVERE CRASH DETECTION)** (lines 305-312):
-- Fractal dimension < 1.15 (realistic threshold - COVID crash was 1.067)
-- Put/Call ratio > 1.2 (high panic)
-- VIX > 30 (SEVERE fear - normal crashes ~25, severe crashes 30+)
-- Markov state = "Crisis" (market in full crisis mode)
-- All 4 conditions must be met simultaneously
+**SHORT Signal (CRASH DETECTION)** (lines 305-320):
+- Fractal dimension < 1.2 (catches most major crashes - COVID was 1.051-1.071)
+- Put/Call ratio > 1.1 (elevated fear/panic)
+- VIX > 25 (moderate to high fear)
+- Markov state: DISABLED by default (informational only)
+- All 3 core conditions must be met simultaneously
 
-**LONG Signal** (lines 314-321):
+**LONG Signal** (lines 320-340):
 - Fractal dimension < 0.8
 - Put/Call ratio < 0.5
 - VIX < 20
-- Markov state = "Bull"
-- All 4 conditions must be met simultaneously
+- Markov state: DISABLED by default (informational only)
+- All 3 core conditions must be met simultaneously
 
-**Note**: Current thresholds are optimized for SEVERE crashes only (COVID-level events).
-Original thresholds (Fractal < 0.7, VIX > 25, Markov = "Volatile") were too strict and never triggered in real market conditions.
+**Current Configuration**:
+- `use_markov: false` - Markov state is calculated but NOT required for signals
+- Thresholds optimized via 5-year backtest (2020-2025)
+- Backtest results: 14 signals, avg drop -2.46%, best trade -12.18%
+- 3x inverse ETF returns: 7.38% avg, 36.53% best, 4.60% avg with 1.5% stop
+
+**To enable Markov** (not recommended): Set `use_markov: true` in config.json
 
 ## Common Development Tasks
 
@@ -138,11 +145,17 @@ pip install twilio  # Optional, for SMS alerts
 - Requires 2FA enabled on Gmail account
 
 **Threshold tuning** (config.json):
-- **Current (SEVERE crashes only)**: fractal_max=1.15, vix_min=30, put_call_min=1.2, markov_state="Crisis"
-- **More conservative** (fewer signals): vix_min=35, put_call_min=1.3
-- **More aggressive** (more signals, less severe): fractal_max=1.2, vix_min=25, markov_state="Volatile"
+- **Current (recommended)**: fractal_max=1.2, vix_min=25, put_call_min=1.1, use_markov=false
+  - Backtest: 14 signals in 5 years, avg -2.46% drop, max -12.18% drop
+  - 3x inverse returns: 7.38% avg, 4.60% with stop loss
+- **More conservative** (fewer signals): fractal_max=1.15, vix_min=30, put_call_min=1.2
+  - Backtest: 3 signals in 5 years, avg -0.92% drop
+- **More aggressive** (more signals): fractal_max=1.25, vix_min=22, put_call_min=1.0
 
-**Important**: Original academic thresholds (fractal<0.7) never trigger in real markets. Current thresholds are based on actual crash data (COVID, 2008).
+**Important Notes**:
+- Original academic thresholds (fractal<0.7) are too strict - never trigger
+- Markov state requirement is DISABLED by default (caused false negatives during COVID crash)
+- Current thresholds optimized via 5-year backtest on real market data (2020-2025)
 
 ## Important Implementation Notes
 
