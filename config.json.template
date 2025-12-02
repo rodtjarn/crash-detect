@@ -1,44 +1,13 @@
 {
   "email": {
-    "enabled": true,
+    "sender": "your-email@gmail.com",
+    "password": "your-gmail-app-password",
     "smtp_server": "smtp.gmail.com",
-    "smtp_port": 587,
-    "sender_email": "YOUR_EMAIL@gmail.com",
-    "sender_password": "YOUR_GMAIL_APP_PASSWORD",
-    "recipient_email": "YOUR_EMAIL@gmail.com"
+    "smtp_port": 587
   },
-  "sms": {
-    "enabled": false,
-    "twilio_account_sid": "YOUR_TWILIO_ACCOUNT_SID",
-    "twilio_auth_token": "YOUR_TWILIO_AUTH_TOKEN",
-    "twilio_phone": "+1234567890",
-    "recipient_phone": "+1234567890"
-  },
-  "trading": {
-    "symbols": {
-      "long": "SPY",
-      "short": "SPXS",
-      "vix_symbol": "^VIX",
-      "index_symbol": "^GSPC"
-    },
-    "position_size": 5.0,
-    "hold_days": 8,
-    "leverage": 3,
-    "thresholds": {
-      "fractal_max": 1.2,
-      "put_call_min": 1.1,
-      "vix_min": 25,
-      "use_markov": false,
-      "markov_state": "Crisis",
-      "fractal_max_long": 0.8,
-      "put_call_max_long": 0.5,
-      "vix_max_long": 20,
-      "use_markov_long": false,
-      "markov_state_long": "Bull"
-    }
-  },
-  "data": {
-    "lookback_days": 90,
-    "min_data_points": 60
+  "twilio": {
+    "account_sid": "your-twilio-account-sid",
+    "auth_token": "your-twilio-auth-token",
+    "phone_number": "+1XXXXXXXXXX"
   }
 }
