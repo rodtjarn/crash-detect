@@ -38,19 +38,22 @@ def load_config():
 def get_current_conditions():
     """Analyze current QQQ conditions"""
     # Fetch recent data (90 days for context)
-    qqq = yf.download('QQQ', period='90d', progress=False)
+    qqq = yf.download('QQQ', period='90d', progress=False, auto_adjust=True)
 
     if qqq.empty:
         return None
 
-    current_price = qqq['Close'].iloc[-1]
-    prev_price = qqq['Close'].iloc[-2]
+    # Extract scalar values (handle MultiIndex columns from yfinance)
+    close_series = qqq['Close']
+    current_price = close_series.iloc[-1].item() if hasattr(close_series.iloc[-1], 'item') else float(close_series.iloc[-1])
+    prev_price = close_series.iloc[-2].item() if hasattr(close_series.iloc[-2], 'item') else float(close_series.iloc[-2])
 
     # Calculate daily change
     daily_change = ((current_price - prev_price) / prev_price) * 100
 
     # Get recent high (30 days)
-    recent_high = qqq['Close'].tail(30).max()
+    max_val = qqq['Close'].tail(30).max()
+    recent_high = max_val.item() if hasattr(max_val, 'item') else float(max_val)
     drawdown_from_high = ((current_price - recent_high) / recent_high) * 100
 
     # Check last purchase price from our tracking file
