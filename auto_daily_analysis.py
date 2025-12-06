@@ -146,11 +146,19 @@ def send_sms_alert(config, message):
         # Send to both phones
         for person, info in ALERTS.items():
             to_number = f"+1{info['phone']}"
-            sms = client.messages.create(
-                body=message,
-                from_=config['twilio']['phone_number'],
-                to=to_number
-            )
+
+            # Use messaging service if available, otherwise use phone number
+            send_params = {
+                'body': message,
+                'to': to_number
+            }
+
+            if 'messaging_service_sid' in config['twilio']:
+                send_params['messaging_service_sid'] = config['twilio']['messaging_service_sid']
+            else:
+                send_params['from_'] = config['twilio']['phone_number']
+
+            sms = client.messages.create(**send_params)
             print(f"✓ SMS sent to {person}: {sms.sid}")
 
         return True
@@ -230,9 +238,8 @@ Analysis run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S ET')}
         sms_body = f"QQQ BUY SIGNAL: {reason}. Price: ${conditions['current_price']:.2f}, Change: {conditions['daily_change']:+.1f}%. Review & trade via Schwab."
 
         # Send alerts
-        print("\nSending alerts...")
+        print("\nSending email alerts...")
         send_email_alert(config, subject, email_body)
-        send_sms_alert(config, sms_body)
 
     else:
         print(f"✓ No action needed: {reason}")
