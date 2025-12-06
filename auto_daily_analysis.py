@@ -238,6 +238,43 @@ Analysis run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S ET')}
         print(f"✓ No action needed: {reason}")
         print("="*80)
 
+        # Send daily summary email (no SMS for no-action days)
+        subject = f"QQQ Daily Summary - No Action ({datetime.now().strftime('%Y-%m-%d')})"
+
+        email_body = f"""
+QQQ DAILY MARKET SUMMARY
+
+Status: No buying opportunity detected
+
+Current Conditions:
+- QQQ Price: ${conditions['current_price']:.2f}
+- Daily Change: {conditions['daily_change']:+.2f}%
+- 30-day Drawdown: {conditions['drawdown_from_high']:.2f}%
+"""
+
+        if conditions['last_purchase_price']:
+            email_body += f"- Last Purchase: ${conditions['last_purchase_price']:.2f}\n"
+            email_body += f"- From Last Buy: {conditions['drawdown_from_last']:+.2f}%\n"
+        else:
+            email_body += "- Last Purchase: None tracked\n"
+
+        email_body += f"""
+Buy Triggers (not met):
+- Single-day drop ≥ 5.0% (current: {conditions['daily_change']:+.2f}%)
+"""
+
+        if conditions['last_purchase_price']:
+            email_body += f"- Drop ≥ 5.0% from last purchase (current: {conditions['drawdown_from_last']:+.2f}%)\n"
+
+        email_body += f"""
+Strategy remains active and monitoring market conditions.
+
+Analysis run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S ET')}
+"""
+
+        print("\nSending daily summary email...")
+        send_email_alert(config, subject, email_body)
+
     print("\n✓ Analysis complete\n")
 
 

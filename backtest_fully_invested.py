@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Fully Invested Portfolio Backtest
-$100K always in SPY, sell 3% for SPXS on signals, 30% gain target, reinvest proceeds
+$100K always in QQQ, sell 3% for SPXS on signals, 30% gain target, reinvest proceeds
 """
 
 import yfinance as yf
@@ -28,9 +28,13 @@ class FullyInvestedBacktester:
         print(f"Fetching {years} years of historical data...")
         print(f"From {start_date.date()} to {end_date.date()}")
 
-        # Fetch SPY data
-        spy_data = yf.download(
-            'SPY',
+        # Get symbols from config
+        symbols = self.system.config['trading']['symbols']
+        long_symbol = symbols['long']  # QQQ or QQQ
+
+        # Fetch long ETF data
+        long_data = yf.download(
+            long_symbol,
             start=start_date,
             end=end_date,
             progress=False
@@ -66,7 +70,7 @@ class FullyInvestedBacktester:
         # Combine data
         data = pd.DataFrame(index=index_data.index)
         data['close'] = index_data['Close'].values
-        data['spy'] = spy_data['Close'].values
+        data['long'] = long_data['Close'].values  # Generic name for QQQ/QQQ
         data['vix'] = vix_data['Close'].values
         data['returns'] = data['close'].pct_change()
         data['put_call_ratio'] = self.system.calculate_put_call_proxy(data)
@@ -80,22 +84,22 @@ class FullyInvestedBacktester:
             data['spxs'] = np.nan
 
         print(f"✓ Fetched {len(data)} days of data\n")
-        return data.dropna(subset=['close', 'vix', 'spy'])
+        return data.dropna(subset=['close', 'vix', 'long'])
 
-    def simulate_3x_inverse(self, spy_return):
+    def simulate_3x_inverse(self, long_return):
         """Simulate 3x inverse ETF return"""
-        return -3 * spy_return
+        return -3 * long_return
 
     def run_backtest(self, data, lookback_window=90):
         """
         Run backtest with fully invested portfolio
 
         Strategy:
-        - Start: $100K fully invested in SPY
-        - Signal: Sell 3% of SPY, buy SPXS
+        - Start: $100K fully invested in QQQ
+        - Signal: Sell 3% of QQQ, buy SPXS
         - Exit: SPXS at 30% gain, 5% loss, or 8 days
-        - Reinvest: All proceeds back into SPY
-        - SPY position grows with market during trade
+        - Reinvest: All proceeds back into QQQ
+        - QQQ position grows with market during trade
         """
         print("Running fully invested portfolio backtest...")
         print("="*70)
@@ -114,12 +118,12 @@ class FullyInvestedBacktester:
         print(f"Stop Loss: {stop_loss*100:.1f}%")
         print(f"Max Hold: {hold_days} days\n")
 
-        # Portfolio starts 100% in SPY
+        # Portfolio starts 100% in QQQ
         portfolio_value = initial_capital
-        spy_shares = initial_capital / data['spy'].iloc[lookback_window]
+        long_shares = initial_capital / data['long'].iloc[lookback_window]
 
-        print(f"Initial SPY purchase: {spy_shares:.2f} shares @ "
-              f"${data['spy'].iloc[lookback_window]:.2f}\n")
+        print(f"Initial QQQ purchase: {long_shares:.2f} shares @ "
+              f"${data['long'].iloc[lookback_window]:.2f}\n")
 
         trades = []
         start_idx = lookback_window
@@ -150,14 +154,14 @@ class FullyInvestedBacktester:
                     entry_date = current_date
                     entry_idx = i
 
-                    # Current portfolio value (all in SPY)
-                    current_spy_price = data['spy'].iloc[i]
-                    portfolio_value = spy_shares * current_spy_price
+                    # Current portfolio value (all in QQQ)
+                    current_long_price = data['long'].iloc[i]
+                    portfolio_value = long_shares * current_long_price
 
-                    # Sell 3% of SPY for SPXS
-                    spy_to_sell_value = portfolio_value * position_pct
-                    spy_shares_to_sell = spy_to_sell_value / current_spy_price
-                    spy_shares_remaining = spy_shares - spy_shares_to_sell
+                    # Sell 3% of QQQ for SPXS
+                    long_to_sell_value = portfolio_value * position_pct
+                    long_shares_to_sell = long_to_sell_value / current_long_price
+                    long_shares_remaining = long_shares - long_shares_to_sell
 
                     # Buy SPXS
                     if not pd.isna(data['spxs'].iloc[i]):
@@ -167,7 +171,7 @@ class FullyInvestedBacktester:
                         entry_price_spxs = 100  # Simulated
                         use_real_spxs = False
 
-                    spxs_shares = spy_to_sell_value / entry_price_spxs
+                    spxs_shares = long_to_sell_value / entry_price_spxs
 
                     # Monitor for exit daily
                     exit_date = None
@@ -180,19 +184,19 @@ class FullyInvestedBacktester:
                         days_held = j - i
 
                         # Get current prices
-                        current_spy_price_check = data['spy'].iloc[j]
+                        current_long_price_check = data['long'].iloc[j]
 
                         if use_real_spxs and not pd.isna(data['spxs'].iloc[j]):
                             current_spxs = data['spxs'].iloc[j]
                         else:
                             # Simulate SPXS
-                            spy_return = (
+                            long_return = (
                                 (data['close'].iloc[j] -
                                  data['close'].iloc[i]) /
                                 data['close'].iloc[i]
                             )
                             simulated_return = self.simulate_3x_inverse(
-                                spy_return
+                                long_return
                             )
                             current_spxs = entry_price_spxs * (
                                 1 + simulated_return
@@ -209,7 +213,7 @@ class FullyInvestedBacktester:
                             exit_date = check_date
                             exit_idx = j
                             exit_spxs_price = current_spxs
-                            exit_spy_price = current_spy_price_check
+                            exit_long_price = current_long_price_check
                             exit_reason = (
                                 f"GAIN TARGET ({spxs_return*100:.1f}%)"
                             )
@@ -218,7 +222,7 @@ class FullyInvestedBacktester:
                             exit_date = check_date
                             exit_idx = j
                             exit_spxs_price = current_spxs
-                            exit_spy_price = current_spy_price_check
+                            exit_long_price = current_long_price_check
                             exit_reason = (
                                 f"STOP LOSS ({spxs_return*100:.1f}%)"
                             )
@@ -227,7 +231,7 @@ class FullyInvestedBacktester:
                             exit_date = check_date
                             exit_idx = j
                             exit_spxs_price = current_spxs
-                            exit_spy_price = current_spy_price_check
+                            exit_long_price = current_long_price_check
                             exit_reason = f"TIME EXIT ({days_held}d)"
                             break
 
@@ -235,7 +239,7 @@ class FullyInvestedBacktester:
                     if exit_date is None:
                         exit_idx = min(i + hold_days, len(data) - 1)
                         exit_date = data.index[exit_idx]
-                        exit_spy_price = data['spy'].iloc[exit_idx]
+                        exit_long_price = data['long'].iloc[exit_idx]
                         days_held = exit_idx - i
 
                         if use_real_spxs and not pd.isna(
@@ -243,13 +247,13 @@ class FullyInvestedBacktester:
                         ):
                             exit_spxs_price = data['spxs'].iloc[exit_idx]
                         else:
-                            spy_return = (
+                            long_return = (
                                 (data['close'].iloc[exit_idx] -
                                  data['close'].iloc[i]) /
                                 data['close'].iloc[i]
                             )
                             exit_spxs_price = entry_price_spxs * (
-                                1 + self.simulate_3x_inverse(spy_return)
+                                1 + self.simulate_3x_inverse(long_return)
                             )
                         exit_reason = f"END OF DATA ({days_held}d)"
 
@@ -259,9 +263,9 @@ class FullyInvestedBacktester:
                         entry_price_spxs
                     )
 
-                    # Value of remaining SPY (grew during trade)
-                    spy_value_at_exit = (
-                        spy_shares_remaining * exit_spy_price
+                    # Value of remaining QQQ (grew during trade)
+                    long_value_at_exit = (
+                        long_shares_remaining * exit_long_price
                     )
 
                     # Value of SPXS position
@@ -269,7 +273,7 @@ class FullyInvestedBacktester:
 
                     # Total portfolio value
                     new_portfolio_value = (
-                        spy_value_at_exit + spxs_value_at_exit
+                        long_value_at_exit + spxs_value_at_exit
                     )
 
                     # Calculate trade gain/loss
@@ -282,8 +286,8 @@ class FullyInvestedBacktester:
                     # Update cumulative gain
                     cumulative_gain += trade_gain
 
-                    # Reinvest everything back into SPY
-                    spy_shares = new_portfolio_value / exit_spy_price
+                    # Reinvest everything back into QQQ
+                    long_shares = new_portfolio_value / exit_long_price
                     portfolio_value = new_portfolio_value
 
                     trade_info = {
@@ -291,11 +295,11 @@ class FullyInvestedBacktester:
                         'exit_date': exit_date,
                         'days_held': days_held,
                         'exit_reason': exit_reason,
-                        'entry_spy_price': current_spy_price,
-                        'exit_spy_price': exit_spy_price,
+                        'entry_long_price': current_long_price,
+                        'exit_long_price': exit_long_price,
                         'entry_spxs_price': entry_price_spxs,
                         'exit_spxs_price': exit_spxs_price,
-                        'spy_shares_held': spy_shares_remaining,
+                        'long_shares_held': long_shares_remaining,
                         'spxs_shares': spxs_shares,
                         'spxs_return': spxs_return * 100,
                         'portfolio_before': portfolio_value - trade_gain,
@@ -303,7 +307,7 @@ class FullyInvestedBacktester:
                         'trade_gain': trade_gain,
                         'trade_return': trade_return,
                         'cumulative_gain': cumulative_gain,
-                        'spy_shares_after': spy_shares,
+                        'long_shares_after': long_shares,
                         'fractal': state['fractal_dimension'],
                         'vix': state['vix'],
                         'put_call': state['put_call_ratio']
@@ -316,23 +320,32 @@ class FullyInvestedBacktester:
                     print(
                         f"Trade #{len(trades)}: "
                         f"{entry_date.date()} -> {exit_date.date()} "
-                        f"({days_held}d) | "
-                        f"SPXS: {spxs_return*100:+.1f}% | "
-                        f"Trade P/L: ${trade_gain:+,.0f} "
-                        f"({trade_return:+.2f}%) | "
-                        f"Portfolio: ${portfolio_value:,.0f} | "
-                        f"Cumulative: ${cumulative_gain:+,.0f} | "
-                        f"{exit_reason}"
+                        f"({days_held}d)"
                     )
+                    print(
+                        f"  SPXS: ${long_to_sell_value:,.0f} invested -> "
+                        f"${spxs_value_at_exit:,.0f} returned "
+                        f"({spxs_return*100:+.1f}%)"
+                    )
+                    print(
+                        f"  QQQ: ${long_value_at_exit:,.0f} (grew from "
+                        f"${long_shares_remaining * current_long_price:,.0f})"
+                    )
+                    print(
+                        f"  Trade P/L: ${trade_gain:+,.0f} ({trade_return:+.2f}%) | "
+                        f"Portfolio: ${portfolio_value:,.0f} | "
+                        f"Exit: {exit_reason}"
+                    )
+                    print()
 
             except Exception as e:
                 continue
 
         self.trades = trades
 
-        # Calculate final value (SPY position)
-        final_spy_price = data['spy'].iloc[-1]
-        final_portfolio_value = spy_shares * final_spy_price
+        # Calculate final value (QQQ position)
+        final_long_price = data['long'].iloc[-1]
+        final_portfolio_value = long_shares * final_long_price
 
         return trades, final_portfolio_value, cumulative_gain
 
@@ -348,7 +361,7 @@ class FullyInvestedBacktester:
         if not trades:
             print("\n❌ NO TRADES EXECUTED")
             # Calculate buy & hold
-            print(f"\nBuy & Hold SPY:")
+            print(f"\nBuy & Hold QQQ:")
             print(f"  Final Value: ${final_portfolio:,.2f}")
             total_return = (
                 (final_portfolio - initial_capital) / initial_capital * 100
@@ -456,10 +469,10 @@ def main():
 ║                                                                   ║
 ║        FULLY INVESTED PORTFOLIO BACKTEST - {years} YEARS{' ' * (20 - len(str(years)))}║
 ║                                                                   ║
-║  $100K always in SPY                                              ║
-║  Signal: Sell 3% SPY → Buy SPXS                                   ║
-║  Exit: 30% gain | 5% loss | 8 days                               ║
-║  Reinvest: All proceeds back into SPY                             ║
+║  $100K always in QQQ (95% stays invested during trades)           ║
+║  Signal: Sell 5% QQQ → Buy SPXS                                   ║
+║  Exit: 50% gain | 10% loss | 8 days                              ║
+║  Reinvest: All proceeds back into QQQ                             ║
 ║                                                                   ║
 ╚═══════════════════════════════════════════════════════════════════╝
 """)
@@ -491,10 +504,10 @@ def main():
         f.write("="*70 + "\n\n")
 
         f.write("STRATEGY:\n")
-        f.write("  - $100K always invested in SPY\n")
-        f.write("  - On signal: Sell 3% SPY, buy SPXS\n")
+        f.write("  - $100K always invested in QQQ\n")
+        f.write("  - On signal: Sell 3% QQQ, buy SPXS\n")
         f.write("  - Exit SPXS at: 30% gain, 5% loss, or 8 days\n")
-        f.write("  - Reinvest all proceeds back into SPY\n\n")
+        f.write("  - Reinvest all proceeds back into QQQ\n\n")
 
         f.write("RESULTS:\n")
         f.write(f"  Initial Capital: ${summary['initial_capital']:,.2f}\n")
@@ -534,7 +547,7 @@ def main():
                 f"  Cumulative Gain: ${trade['cumulative_gain']:+,.0f}\n"
             )
             f.write(
-                f"  SPY Shares After: {trade['spy_shares_after']:.2f}\n"
+                f"  QQQ Shares After: {trade['long_shares_after']:.2f}\n"
             )
             f.write("\n")
 

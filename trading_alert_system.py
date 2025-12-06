@@ -280,20 +280,26 @@ class TradingAlertSystem:
         # Get current P/C ratio
         current_pc = data['put_call_ratio'].iloc[-1]
 
-        # Train HMM and get current state
-        hmm_model, state_labels = self.train_hmm_model(data['returns'])
+        # Train HMM and get current state (only if needed)
+        thresholds = self.config['trading']['thresholds']
+        use_markov = thresholds.get('use_markov', False) or thresholds.get('use_markov_long', False)
 
-        if hmm_model is None or state_labels is None:
-            markov_state = 'Unknown'
+        if use_markov:
+            hmm_model, state_labels = self.train_hmm_model(data['returns'])
+
+            if hmm_model is None or state_labels is None:
+                markov_state = 'Unknown'
+            else:
+                # Prepare current features
+                current_features = np.array([[
+                    data['returns'].iloc[-1],
+                    data['returns'].iloc[-5:].std(),
+                    data['returns'].iloc[-20:].std()
+                ]])
+                current_state_num = hmm_model.predict(current_features)[0]
+                markov_state = state_labels.get(current_state_num, 'Unknown')
         else:
-            # Prepare current features
-            current_features = np.array([[
-                data['returns'].iloc[-1],
-                data['returns'].iloc[-5:].std(),
-                data['returns'].iloc[-20:].std()
-            ]])
-            current_state_num = hmm_model.predict(current_features)[0]
-            markov_state = state_labels.get(current_state_num, 'Unknown')
+            markov_state = 'Disabled'
 
         return {
             'fractal_dimension': fractal,
@@ -312,7 +318,7 @@ class TradingAlertSystem:
         # Check SHORT conditions (bearish setup)
         short_conditions = {
             'fractal': state['fractal_dimension'] is not None and
-                      state['fractal_dimension'] < thresholds['fractal_max'],
+                      state['fractal_dimension'] > thresholds['fractal_max'],
             'put_call': state['put_call_ratio'] > thresholds['put_call_min'],
             'vix': state['vix'] > thresholds['vix_min']
         }

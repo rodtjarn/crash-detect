@@ -48,7 +48,7 @@ StandardOutput=journal
 StandardError=journal
 
 # Shutdown after completion
-ExecStartPost=/usr/bin/systemctl poweroff
+ExecStartPost=/usr/bin/systemctl suspend
 
 [Install]
 WantedBy=multi-user.target
@@ -64,8 +64,8 @@ Description=Daily Trading Analysis Timer (3 PM ET weekdays)
 # Run at 3:00 PM ET (20:00 UTC / 8:00 PM UTC depending on DST)
 # During EDT (Mar-Nov): 3 PM EDT = 7 PM UTC (19:00)
 # During EST (Nov-Mar): 3 PM EST = 8 PM UTC (20:00)
-OnCalendar=Mon,Tue,Wed,Thu,Fri 19:00:00
-OnCalendar=Mon,Tue,Wed,Thu,Fri 20:00:00
+OnCalendar=Mon,Tue,Wed,Thu,Fri 14:00:00
+WakeSystem=true
 
 Persistent=true
 
