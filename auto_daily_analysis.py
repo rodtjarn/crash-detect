@@ -16,7 +16,7 @@ from email.mime.multipart import MIMEMultipart
 ALERTS = {
     'per': {
         'phone': '7374001329',
-        'email': 'perjohandanders@gmail.com'
+        'email': 'perjohananders@gmail.com'
     },
     'jenna': {
         'phone': '7374002720',

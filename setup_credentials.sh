@@ -12,7 +12,7 @@ echo ""
 
 # Get Gmail app password securely
 echo "Gmail Configuration:"
-echo "  Email: perjohandanders@gmail.com"
+echo "  Email: perjohananders@gmail.com"
 echo ""
 echo -n "Enter Gmail App Password (16 characters, input hidden): "
 read -s GMAIL_PASSWORD
