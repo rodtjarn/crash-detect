@@ -27,6 +27,10 @@ ENV/
 
 # Sensitive - DO NOT COMMIT
 config.json
+config.json.backup
+
+# Backtest output files
+*_202*.txt
 
 # Temporary files
 *.tmp
