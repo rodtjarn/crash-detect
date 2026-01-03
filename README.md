@@ -297,6 +297,123 @@ cat /sys/class/rtc/rtc0/wakealarm
 systemctl status trading-alert.service
 ```
 
+## System Status & Monitoring
+
+### Check If Auto-Wake Is Enabled
+
+**Verify systemd service:**
+```bash
+# Check if service is enabled (will start on boot)
+systemctl is-enabled trading-alert.service
+# Should output: enabled
+
+# View service status
+systemctl status trading-alert.service
+# Should show: loaded and enabled
+
+# Check service configuration
+systemctl cat trading-alert.service
+```
+
+**Verify RTC wake support:**
+```bash
+# Check if RTC wake is supported
+cat /sys/class/rtc/rtc0/wakealarm
+# Should output a number (timestamp) or empty line (not "No such file")
+
+# If file doesn't exist, RTC wake is not supported by your hardware
+```
+
+### Check When Next Wake/Analysis Will Occur
+
+**View next scheduled wake time:**
+```bash
+# Method 1: Read RTC alarm (shows Unix timestamp)
+cat /sys/class/rtc/rtc0/wakealarm
+# Example output: 1704398400
+
+# Method 2: Convert timestamp to human-readable
+date -d @$(cat /sys/class/rtc/rtc0/wakealarm)
+# Example output: 2026-01-03 20:00:00
+
+# Method 3: Quick check with pretty output
+./set_rtc_wake.sh
+# Output: ✓ RTC wake alarm set for: 2026-01-03 20:00:00 (2:00 PM CST / 3:00 PM ET - 1hr before market close)
+```
+
+**If no wake time is set:**
+```bash
+# Set next wake time
+./set_rtc_wake.sh
+# System will wake at 2:00 PM CST tomorrow (or next trading day)
+```
+
+### Verify System Is Working
+
+**Complete verification checklist:**
+
+```bash
+# 1. Check service is enabled
+systemctl is-enabled trading-alert.service
+# Expected: enabled
+
+# 2. Check RTC wake is scheduled
+date -d @$(cat /sys/class/rtc/rtc0/wakealarm) 2>/dev/null
+# Expected: Shows next wake date/time (2 PM CST on next trading day)
+
+# 3. Test email system manually
+python3 auto_daily_analysis.py
+# Expected: Should send email successfully
+
+# 4. Check portfolio tracking
+cat portfolio.json
+# Expected: Shows your initial capital and purchases
+
+# 5. View recent logs (if system has run before)
+journalctl -u trading-alert.service -n 50
+# Shows last 50 log entries from auto-wake runs
+```
+
+**Expected next wake times:**
+- **Monday-Thursday:** Tomorrow at 2:00 PM CST
+- **Friday:** Next Monday at 2:00 PM CST
+- **Saturday-Sunday:** Next Monday at 2:00 PM CST
+
+### Troubleshooting System Status
+
+**Service not enabled:**
+```bash
+sudo systemctl enable trading-alert.service
+sudo systemctl daemon-reload
+```
+
+**No wake time set:**
+```bash
+./set_rtc_wake.sh
+```
+
+**Wake time in the past:**
+```bash
+# Clear old alarm and set new one
+echo 0 | sudo tee /sys/class/rtc/rtc0/wakealarm
+./set_rtc_wake.sh
+```
+
+**System didn't wake:**
+1. Check BIOS settings (RTC Wake must be enabled)
+2. Verify wake alarm was set before shutdown: `cat /sys/class/rtc/rtc0/wakealarm`
+3. Check system logs after manual boot: `journalctl -u trading-alert.service`
+
+**Email not sending:**
+```bash
+# Test email configuration
+python3 auto_daily_analysis.py
+# Check output for "✓ Email alerts sent successfully"
+
+# Verify config.json has correct credentials
+cat config.json
+```
+
 ## Strategy Philosophy
 
 ### Why This Works
