@@ -141,6 +141,67 @@ python3 auto_daily_analysis.py
 # System will now wake daily at 2 PM CST, analyze, email, shutdown
 ```
 
+## Portfolio Tracking
+
+Every email (ALERT and INFO) includes your complete portfolio status:
+
+**📧 Email Shows:**
+- **Total Value** - Current portfolio value (shares + cash)
+- **Total Gain/Loss** - Dollar amount and percentage return
+- **Total Shares Owned** - QQQ shares accumulated
+- **Average Cost** - Your average purchase price per share
+- **Current Price** - Today's QQQ price
+- **Cash Remaining** - Uninvested capital
+- **Number of Purchases** - Total buy signals executed
+
+### Manual Purchase Tracking
+
+When you execute a purchase recommended by the system, add it to `portfolio.json`:
+
+```json
+{
+  "initial_capital": 250000,
+  "purchases": [
+    {
+      "date": "2024-08-05",
+      "price": 450.25,
+      "shares": 111.05,
+      "investment": 50000
+    },
+    {
+      "date": "2024-10-15",
+      "price": 475.80,
+      "shares": 105.09,
+      "investment": 50000
+    }
+  ]
+}
+```
+
+**Fields:**
+- `date` - Purchase date (YYYY-MM-DD)
+- `price` - QQQ price at purchase
+- `shares` - Number of shares bought
+- `investment` - Dollar amount invested
+
+The system automatically calculates:
+- Total shares owned
+- Average cost basis
+- Current portfolio value
+- Gain/loss tracking
+
+**Example Email Output:**
+```
+💼 YOUR PORTFOLIO STATUS:
+- Total Value: $282,520
+- Total Gain/Loss: $+32,520 (+13.01%)
+- Total Shares Owned: 216.14 QQQ
+- Average Cost: $462.72/share
+- Current Price: $613.12/share
+- Cash Remaining: $150,000
+- Number of Purchases: 2
+```
+
 ## File Structure
 
 ### Core ML System
@@ -158,8 +219,9 @@ python3 auto_daily_analysis.py
 - **`set_rtc_wake.sh`** - Sets RTC wake alarm for next trading day
 - **`setup_linux_autorun.sh`** - One-time setup for auto-wake system
 
-### Configuration
+### Configuration & Tracking
 - **`config.json`** - Email credentials and settings
+- **`portfolio.json`** - Portfolio tracking (purchases, shares, capital)
 - **`CLAUDE.md`** - Detailed technical documentation (legacy system)
 
 ## Example: Best Period Analysis (2011-2020)

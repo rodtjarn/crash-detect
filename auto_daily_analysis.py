@@ -137,13 +137,60 @@ def get_current_conditions():
         return None
 
 
-def get_last_purchase_price():
-    """Get the last purchase price from tracking file"""
+def load_portfolio():
+    """Load portfolio tracking data"""
     try:
-        with open('last_purchase.txt', 'r') as f:
-            return float(f.read().strip())
+        with open('portfolio.json', 'r') as f:
+            return json.load(f)
     except FileNotFoundError:
+        # Initialize empty portfolio
+        return {
+            'initial_capital': 250000,
+            'purchases': []
+        }
+
+
+def save_portfolio(portfolio):
+    """Save portfolio tracking data"""
+    with open('portfolio.json', 'w') as f:
+        json.dump(portfolio, f, indent=2)
+
+
+def calculate_portfolio_value(portfolio, current_price):
+    """Calculate current portfolio value and metrics"""
+    if not portfolio['purchases']:
         return None
+
+    total_shares = sum(p['shares'] for p in portfolio['purchases'])
+    total_invested = sum(p['investment'] for p in portfolio['purchases'])
+    initial_capital = portfolio['initial_capital']
+    cash_remaining = initial_capital - total_invested
+
+    shares_value = total_shares * current_price
+    total_value = shares_value + cash_remaining
+
+    total_gain = total_value - initial_capital
+    total_return_pct = (total_gain / initial_capital) * 100
+
+    return {
+        'total_shares': total_shares,
+        'total_invested': total_invested,
+        'cash_remaining': cash_remaining,
+        'shares_value': shares_value,
+        'total_value': total_value,
+        'total_gain': total_gain,
+        'total_return_pct': total_return_pct,
+        'num_purchases': len(portfolio['purchases']),
+        'avg_purchase_price': total_invested / total_shares if total_shares > 0 else 0
+    }
+
+
+def get_last_purchase_price():
+    """Get the last purchase price from portfolio"""
+    portfolio = load_portfolio()
+    if portfolio['purchases']:
+        return portfolio['purchases'][-1]['price']
+    return None
 
 
 def check_buy_signal(conditions):
@@ -251,6 +298,10 @@ def main():
         print("✗ Failed to fetch market data")
         return
 
+    # Load portfolio and calculate current value
+    portfolio = load_portfolio()
+    portfolio_metrics = calculate_portfolio_value(portfolio, conditions['current_price'])
+
     print(f"\nQQQ Current Price: ${conditions['current_price']:.2f}")
     print(f"Daily Change: {conditions['daily_change']:+.2f}%")
     print(f"Drawdown from ATH: {conditions['drawdown_from_ath']:.2f}%")
@@ -258,11 +309,18 @@ def main():
     print(f"VIX: {conditions['vix']:.1f}")
     print(f"RSI: {conditions['rsi']:.1f}")
 
-    if conditions['last_purchase_price']:
+    if portfolio_metrics:
+        print(f"\n💼 PORTFOLIO STATUS:")
+        print(f"Total Value: ${portfolio_metrics['total_value']:,.0f}")
+        print(f"Total Gain/Loss: ${portfolio_metrics['total_gain']:+,.0f} ({portfolio_metrics['total_return_pct']:+.2f}%)")
+        print(f"Purchases: {portfolio_metrics['num_purchases']}")
+        print(f"Total Shares: {portfolio_metrics['total_shares']:.2f}")
+        print(f"Cash Remaining: ${portfolio_metrics['cash_remaining']:,.0f}")
+    elif conditions['last_purchase_price']:
         print(f"Last Purchase Price: ${conditions['last_purchase_price']:.2f}")
         print(f"Drawdown from last purchase: {conditions['drawdown_from_last']:+.2f}%")
     else:
-        print("No previous purchase tracked")
+        print("No previous purchases tracked")
 
     # Check for buy signal
     has_signal, reason, signal_strength = check_buy_signal(conditions)
@@ -303,11 +361,28 @@ ML-DETECTED BUYING OPPORTUNITY
 - Confidence: {rec['confidence']:.1f}%
 """
 
-        if conditions['last_purchase_price']:
+        # Add portfolio status
+        if portfolio_metrics:
+            email_body += f"""
+💼 YOUR PORTFOLIO STATUS:
+- Total Value: ${portfolio_metrics['total_value']:,.0f}
+- Total Gain/Loss: ${portfolio_metrics['total_gain']:+,.0f} ({portfolio_metrics['total_return_pct']:+.2f}%)
+- Total Shares Owned: {portfolio_metrics['total_shares']:.2f} QQQ
+- Average Cost: ${portfolio_metrics['avg_purchase_price']:.2f}/share
+- Current Price: ${conditions['current_price']:.2f}/share
+- Cash Remaining: ${portfolio_metrics['cash_remaining']:,.0f}
+- Number of Purchases: {portfolio_metrics['num_purchases']}
+"""
+        elif conditions['last_purchase_price']:
             email_body += f"""
 📈 PURCHASE HISTORY:
 - Last Purchase: ${conditions['last_purchase_price']:.2f}
 - From Last Buy: {conditions['drawdown_from_last']:+.2f}%
+"""
+        else:
+            email_body += """
+💼 PORTFOLIO STATUS:
+- No purchases yet (monitoring mode)
 """
 
         email_body += f"""
@@ -353,14 +428,29 @@ Status: {reason}
 - Model Prediction: HOLD
 """
 
-        if conditions['last_purchase_price']:
+        # Add portfolio status to daily summary
+        if portfolio_metrics:
+            email_body += f"""
+💼 YOUR PORTFOLIO STATUS:
+- Total Value: ${portfolio_metrics['total_value']:,.0f}
+- Total Gain/Loss: ${portfolio_metrics['total_gain']:+,.0f} ({portfolio_metrics['total_return_pct']:+.2f}%)
+- Total Shares Owned: {portfolio_metrics['total_shares']:.2f} QQQ
+- Average Cost: ${portfolio_metrics['avg_purchase_price']:.2f}/share
+- Current Price: ${conditions['current_price']:.2f}/share
+- Cash Remaining: ${portfolio_metrics['cash_remaining']:,.0f}
+- Number of Purchases: {portfolio_metrics['num_purchases']}
+"""
+        elif conditions['last_purchase_price']:
             email_body += f"""
 📈 PURCHASE HISTORY:
 - Last Purchase: ${conditions['last_purchase_price']:.2f}
 - From Last Buy: {conditions['drawdown_from_last']:+.2f}%
 """
         else:
-            email_body += "\n📈 PURCHASE HISTORY:\n- No previous purchases tracked\n"
+            email_body += """
+💼 PORTFOLIO STATUS:
+- No purchases yet (monitoring mode)
+"""
 
         email_body += f"""
 {'='*70}

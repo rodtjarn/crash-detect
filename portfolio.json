@@ -1,0 +1,17 @@
+{
+  "initial_capital": 250000,
+  "purchases": [
+    {
+      "date": "2024-08-05",
+      "price": 450.25,
+      "shares": 111.05,
+      "investment": 50000
+    },
+    {
+      "date": "2024-10-15",
+      "price": 475.80,
+      "shares": 105.09,
+      "investment": 50000
+    }
+  ]
+}
